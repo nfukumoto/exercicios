@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Projeto Livraria</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    </head>
+    <body class="container">
+        <section class="mb-5 pt-5">
+            <form id="formChamada">
+                <div>
+                    <label>Nome:</label>
+                    <input type="text" name="nome" id="nome" />
+                </div>
+                <div>
+                    <input type="checkbox" name="chamada" id="chamada" /> <!--Inserir uma checkbox -- Se colocar "checked" ele já vem marcado-->
+                    <label>Quero abrir chamado</label>
+                </div>
+                <button class="btn btn-info">Confirmar</button>
+                <div id="relatorio"></div>
+            </form>
+        </section>
+    </body>
+    <script>
+        let idChamada=parseInt(Math.random()*900) + 100 //Número aleatório com 3 dígitos
+        console.log(idChamada);
+        localStorage.setItem('chamado' + idChamada,'Roque,roque@roque.com.br,1194354684') //número da chamada do formulário
+
+        console.log(document.forms.formChamada.chamada.checked) // No input checkbox tem que estar "checked" para ser true
+
+        console.log(localStorage.getItem('chamado104'))
+        let ch=localStorage.getItem('chamado104')
+        let chJSON=ch.split(',') // Split é usado quando a string lida, tem o padrão de array com vírgulas e não JSON (par chave/valor)
+
+        console.log(chJSON)
+
+        let chArray= ch.split(',')
+        console.log(chArray)
+        console.log('nome:',chArray[0])
+
+        //Json +===============
+        let n='{"n1":"11a","n2":"2","n3":"3"}'
+        let nJSON=JSON.parse(n)
+
+        console.log(nJSON);
+
+        let info='{"nome":"' + chArray[0] + '","email":"' + chArray[1] + '"}"'
+
+        for(key in localStorage){
+            console.log(key)
+            console.log(localStorage.getItem(key))
+            var p=document.createElement('p')
+            p.innerHTML=localStorage.getItem(key)
+            document.querySelector('#relatorio').appendChild(p)
+        }
+
+    </script>
+    
+</html>

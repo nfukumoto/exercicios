@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Estrutura de Dados</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    </head>
+    <body class="container">
+        <h2 style="color:blue;">Estrutura de Dados</h2>
+        <div>
+            <hr />
+            <h3 style="color:darkgreen;">Função recursiva</h3> <!--Parecida com iteradores "laços" e tem resultados parecidos-->
+            <div id="recursiva"></div>
+            <hr />
+
+            <h3 style="color:darkmagenta;">Recursiva consumindo Array</h3>
+            <div id="lerArray"></div>
+            <hr />
+
+            <h3 style="color: indigo;">Filas</h3>
+            <div>
+                <span style="font-weight:bolder;">Próximo Cliente:</span>
+                <span id="next"></span><p></p>
+                <p style="font-weight:bolder;">Cliente(s) Atendido(s)</p>
+                <ul id="result"></ul>
+                <p style="font-weight:bolder;">Cliente(s) Aguardando Atendimento</p>
+                <ul id="users"></ul>
+                <button id="btAtende" class="btn btn-info">Atendimento Concluído</button>
+                <button id="darBaixa" class="btn btn-info">Dar Baixa Automática</button>
+                <a href="estrutura-dados.html"><button class="btn btn-info">Recarregar Fila</button></a>
+            </div>
+            <hr />
+        </div>
+    </body>
+    <script>
+        let n = 20
+        let x = 0
+        let paises=["Brasil","França","Alemanha","Argentina"]
+
+        function recursiva(obj){
+            if (n >= 0){
+                obj.innerHTML += n + " , "
+                n = n - 1 // Pode ser n--
+                recursiva(document.querySelector("#recursiva")) // Chamada recursiva
+            }else{
+                document.querySelector("#recursiva").innerHTML+= "Fim"
+            }
+        }
+
+        recursiva(document.querySelector("#recursiva")) // 1a chamada
+        //document.querySelector("#recursiva").innerHTML+=recursiva() + "<br />"        
+
+        function recursiva_array(obj){
+            if (x < paises.length){
+                obj.innerHTML += paises[x] + " - "
+                x = x + 1 // Pode ser x++
+                recursiva_array(document.querySelector("#lerArray")) // Chamada recursiva
+            }else{
+                document.querySelector("#lerArray").innerHTML+= "Fim"
+            }
+        }
+
+        recursiva_array(document.querySelector("#lerArray")) // 1a chamada
+
+
+        // Filas = Queues (FIFO - First In, First Out)
+
+        let fila = []
+        let usuariosAtendidos=[]
+
+        fila.push(25)
+        fila.push(34)
+        fila.push(9)
+        console.log(fila);
+
+        console.log(fila[0]);
+        usuariosAtendidos.push(fila[0])
+        fila.shift()
+        console.log("Array após a primeira chamada", fila);
+
+        console.log(fila[0]);
+        usuariosAtendidos.push(fila[0])
+        fila.shift()
+        console.log("Array após a segunda chamada", fila);
+
+        console.log("Usuários atendidos",usuariosAtendidos);
+
+
+        // next=próximo usuário=, users=lista de pendências , result=lista de atendidos, btAtende=botão de confirmação
+
+        let listaUsers=["Alan","Debora","Francis","Georgia","Osmar"]
+        let listaResult=[]
+
+        function users(){
+            document.querySelector("#users").innerHTML="" // Zera a variável antes do laço
+            for (var i=0; i<listaUsers.length; i++){
+                document.querySelector("#users").innerHTML+="<li>" + listaUsers[i] + "</li>"
+            }
+            listaUsers.length > 0 ? document.querySelector("#next").innerHTML=" Sr(a) " + listaUsers[0] : document.querySelector("#next").innerHTML="<b> Todos os clientes foram atendidos</b>"
+        }
+        users()
+
+        document.querySelector("#btAtende").onclick=function(){ darBaixa() } // Botão de Atendimento concluído
+
+        function darBaixa(){
+            if (listaUsers.length > 0){
+                listaResult.push(listaUsers[0])
+                document.querySelector("#result").innerHTML=""
+                for(var i=0; i<listaResult.length; i++){
+                    document.querySelector("#result").innerHTML+="<li>" + listaResult[i] + "</li>"
+                }
+                listaUsers.shift() // Remove da lista de pendências
+                users() // Lê a lista novamente
+            }else{
+                document.querySelector("#next").innerHTML="<b> Todos os clientes foram atendidos</b>"
+            }
+        }
+
+        let intervaloBaixa
+        document.querySelector("#darBaixa").onclick=function(){
+        intervaloBaixa=setInterval(function(){darBaixa()},500)
+        }
+        // Para encerrar o intervalo use clearInterval(intervaloBaixa)
+        clearInterval(intervaloBaixa)
+    </script>
+</html>
