@@ -62,7 +62,7 @@ relogio()
     relogio()
 },1000) */
 
-//let tempo_intervalo = setInterval(relogio,1000)
+let tempo_intervalo = setInterval(relogio,1000)
 
 // Exemplo 05
 let pessoa={
